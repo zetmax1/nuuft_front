@@ -11,7 +11,7 @@ RUN npm ci --frozen-lockfile
 COPY . .
 
 # Build arg for API URL, injected at build time by CI/CD
-ARG VITE_API_BASE_URL=https://api.nuujf.uz
+ARG VITE_API_BASE_URL=https://api.jbnuu.uz/api
 ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
 
 RUN npm run build
