@@ -160,7 +160,7 @@ const DepartmentDetail = () => {
 
             {/* Main Content - Flowing Document Style */}
             <div className="container mx-auto px-6 py-16">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+                <div className="flex flex-col-reverse lg:grid lg:grid-cols-12 gap-16">
                     
                     {/* Left Column - Main Info (Takes up 8 columns) */}
                     <div className="lg:col-span-8">
@@ -271,34 +271,39 @@ const DepartmentDetail = () => {
                         {department.staff && department.staff.length > 0 && (
                             <section className="mb-16 pb-12 border-b border-theme-border">
                                 <h2 className="text-2xl font-bold text-text-primary mb-8 tracking-tight">{t('departments.staff')}</h2>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                                     {department.staff.map((member) => {
                                         const memberImageUrl = getImageUrl(member.image_url);
                                         return (
-                                            <div key={member.id} className="flex items-start gap-4">
-                                                <div className="w-16 h-16 bg-surface-200 overflow-hidden shrink-0 border border-theme-border">
+                                            <div key={member.id} className="bg-theme-card border border-theme-border rounded-xl overflow-hidden flex flex-col shadow-sm hover:shadow-md transition-shadow">
+                                                <div className="h-56 bg-surface-200 w-full relative group/staff">
                                                     {memberImageUrl ? (
                                                         <img 
                                                             src={memberImageUrl} 
                                                             alt={member.name} 
-                                                            className="w-full h-full object-cover grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                                                            className="w-full h-full object-cover"
                                                         />
                                                     ) : (
                                                         <div className="w-full h-full flex items-center justify-center text-text-secondary">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 opacity-50" fill="currentColor" viewBox="0 0 24 24">
                                                                 <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
                                                             </svg>
                                                         </div>
                                                     )}
                                                 </div>
-                                                <div>
-                                                    <h4 className="font-bold text-text-primary mb-1">{member.name}</h4>
-                                                    <p className="text-sm text-text-secondary mb-1">{member.title || member.specialization}</p>
-                                                    {member.email && (
-                                                        <a href={`mailto:${member.email}`} className="text-xs text-primary-500 hover:underline">
-                                                            {member.email}
-                                                        </a>
+                                                <div className="p-6 flex flex-col flex-grow text-center items-center">
+                                                    <h4 className="font-bold text-text-primary text-base mb-1">{member.name}</h4>
+                                                    {member.degree && (
+                                                        <p className="text-sm text-text-secondary font-medium mb-1">{member.degree}</p>
                                                     )}
+                                                    
+                                                    <div className="mt-auto">
+                                                        {member.email && (
+                                                            <a href={`mailto:${member.email}`} className="text-[13px] font-medium text-primary-500 hover:text-primary-600 hover:underline transition-colors">
+                                                                 {member.email}
+                                                            </a>
+                                                        )}
+                                                    </div>
                                                 </div>
                                             </div>
                                         );
@@ -348,7 +353,7 @@ const DepartmentDetail = () => {
                                 </h3>
 
                                 <div className="text-center">
-                                    <div className="w-32 h-32 mx-auto bg-surface-100 mb-6 overflow-hidden border border-theme-border">
+                                    <div className="w-56 h-56 mx-auto bg-surface-100 mb-6 overflow-hidden border border-theme-border">
                                         {headImageUrl ? (
                                             <img 
                                                 src={headImageUrl} 
@@ -364,9 +369,9 @@ const DepartmentDetail = () => {
                                         )}
                                     </div>
                                     <h4 className="text-lg font-bold text-text-primary mb-1">{department.head_name}</h4>
-                                    <p className="text-text-secondary text-sm mb-6">{department.head_title || "Kafedra mudiri"}</p>
+                                    <p className="text-text-secondary text-sm mb-4">{department.head_title || "Kafedra mudiri"}</p>
 
-                                    <div className="space-y-2 pt-6 border-t border-theme-border text-sm text-left">
+                                    <div className="space-y-3 text-sm text-left">
                                         {department.email && (
                                             <div className="flex flex-col">
                                                 <span className="text-text-secondary text-xs uppercase tracking-wider">{t('departments.email')}</span>
@@ -374,7 +379,7 @@ const DepartmentDetail = () => {
                                             </div>
                                         )}
                                         {department.phone && (
-                                            <div className="flex flex-col mt-3">
+                                            <div className="flex flex-col">
                                                 <span className="text-text-secondary text-xs uppercase tracking-wider">{t('departments.phone')}</span>
                                                 <span className="text-text-primary">{department.phone}</span>
                                             </div>

@@ -21,7 +21,9 @@ export default {
         code: "Fakultet kodi:",
         goBack: "Orqaga",
         defaultAddress: "Jizzax sh., Sh. Rashidov shoh ko'chasi",
-        defaultAbout: " O'zbekiston Milliy universiteti Jizzax filialining yetakchi ta'lim markazlaridan biri hisoblanadi. Fakultet zamonaviy ta'lim standartlari asosida yuqori malakali mutaxassislarni tayyorlashga qaratilgan."
+        defaultAbout: " O'zbekiston Milliy universiteti Jizzax filialining yetakchi ta'lim markazlaridan biri hisoblanadi. Fakultet zamonaviy ta'lim standartlari asosida yuqori malakali mutaxassislarni tayyorlashga qaratilgan.",
+        email: "Email",
+        phone: "Telefon"
     },
     ru: {
         errorLoading: "Произошла ошибка при загрузке данных.",
@@ -45,7 +47,9 @@ export default {
         code: "Код факультета:",
         goBack: "Назад",
         defaultAddress: "г. Джизак, проспект Ш. Рашидова",
-        defaultAbout: " является одним из ведущих образовательных центров Джизакского филиала Национального университета Узбекистана. Факультет направлен на подготовку высококвалифицированных специалистов на основе современных образовательных стандартов."
+        defaultAbout: " является одним из ведущих образовательных центров Джизакского филиала Национального университета Узбекистана. Факультет направлен на подготовку высококвалифицированных специалистов на основе современных образовательных стандартов.",
+        email: "Электронная почта",
+        phone: "Телефон"
     },
     en: {
         errorLoading: "An error occurred while loading data.",
@@ -69,6 +73,8 @@ export default {
         code: "Faculty code:",
         goBack: "Back",
         defaultAddress: "Jizzakh city, Sh. Rashidov avenue",
-        defaultAbout: " is one of the leading educational centers of the Jizzakh branch of the National University of Uzbekistan. The faculty is aimed at training highly qualified specialists based on modern educational standards."
+        defaultAbout: " is one of the leading educational centers of the Jizzakh branch of the National University of Uzbekistan. The faculty is aimed at training highly qualified specialists based on modern educational standards.",
+        email: "Email",
+        phone: "Phone"
     }
 };
