@@ -17,46 +17,40 @@ const Blog = () => {
         setLatestNews(getNews().slice(0, 4));
         setLatestAnnouncements(getAnnouncements().slice(0, 4));
 
-        // Then dynamically fetch the latest real data from backend
+        // Fetch both news and announcements in parallel — not sequential
         const fetchPosts = async () => {
             try {
-                // Fetch News
-                try {
-                    const newsData = await getLatestForHome('news');
-                    if (Array.isArray(newsData) && newsData.length > 0) {
-                        const formattedNews = newsData.map(item => ({
-                            id: item.id,
-                            title: item.title,
-                            excerpt: item.excerpt,
-                            image: getImageUrl(item.cover_image_url) || '/logo.png',
-                            displayDate: new Date(item.published_date),
-                            published_date: item.published_date
-                        }));
-                        setLatestNews(formattedNews);
-                    }
-                } catch (newsErr) {
-                    console.error("Failed to fetch news:", newsErr);
+                const [newsData, annData] = await Promise.all([
+                    getLatestForHome('news'),
+                    getLatestForHome('announcement'),
+                ]);
+
+                if (Array.isArray(newsData) && newsData.length > 0) {
+                    const formattedNews = newsData.map(item => ({
+                        id: item.id,
+                        title: item.title,
+                        excerpt: item.excerpt,
+                        image: getImageUrl(item.cover_image_url) || '/logo.png',
+                        displayDate: new Date(item.published_date),
+                        published_date: item.published_date
+                    }));
+                    setLatestNews(formattedNews);
                 }
 
-                // Fetch Announcements
-                try {
-                    const annData = await getLatestForHome('announcement');
-                    if (Array.isArray(annData) && annData.length > 0) {
-                        const formattedAnn = annData.map(item => ({
-                            id: item.id,
-                            title: item.title,
-                            excerpt: item.excerpt,
-                            image: getImageUrl(item.cover_image_url) || '/logo.png',
-                            displayDate: new Date(item.published_date),
-                            published_date: item.published_date
-                        }));
-                        setLatestAnnouncements(formattedAnn);
-                    }
-                } catch (annErr) {
-                    console.error("Failed to fetch announcements:", annErr);
+                if (Array.isArray(annData) && annData.length > 0) {
+                    const formattedAnn = annData.map(item => ({
+                        id: item.id,
+                        title: item.title,
+                        excerpt: item.excerpt,
+                        image: getImageUrl(item.cover_image_url) || '/logo.png',
+                        displayDate: new Date(item.published_date),
+                        published_date: item.published_date
+                    }));
+                    setLatestAnnouncements(formattedAnn);
                 }
             } catch (error) {
                 console.error("Failed to fetch posts:", error);
+                // Local storage fallback already set above — UI stays populated
             }
         };
 

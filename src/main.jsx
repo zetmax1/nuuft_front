@@ -2,11 +2,26 @@ import './initAxios'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
-import axios from 'axios'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ThemeProvider } from './context/ThemeContext'
 import { LanguageProvider } from './context/LanguageContext'
 import './index.css'
 import App from './App.jsx'
+
+// React Query client — global cache for all API data.
+// staleTime: treat cached data as fresh for 5 minutes (no refetch on revisit).
+// gcTime: keep unused data in memory for 10 minutes before garbage collecting.
+// retry: retry failed requests twice before showing an error.
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000,   // 5 minutes
+      gcTime: 10 * 60 * 1000,     // 10 minutes
+      retry: 2,
+      refetchOnWindowFocus: false, // Don't refetch just because user switched tabs
+    },
+  },
+});
 
 const initializeApp = () => {
   const currentPath = window.location.pathname;
@@ -21,13 +36,15 @@ const initializeApp = () => {
 
   createRoot(document.getElementById('root')).render(
     <StrictMode>
-      <ThemeProvider>
-        <LanguageProvider initialLang={pathLang}>
-          <BrowserRouter basename={`/${pathLang}`}>
-            <App />
-          </BrowserRouter>
-        </LanguageProvider>
-      </ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider>
+          <LanguageProvider initialLang={pathLang}>
+            <BrowserRouter basename={`/${pathLang}`}>
+              <App />
+            </BrowserRouter>
+          </LanguageProvider>
+        </ThemeProvider>
+      </QueryClientProvider>
     </StrictMode>,
   )
 };
